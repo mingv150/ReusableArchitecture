@@ -1,0 +1,29 @@
+# depslib dependency file v1.0
+1369147778 source:g:\temporary\shell\shell\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1369148762 source:g:\temporary\shell\shell\shell.c
+	<stdio.h>
+
+1369190834 source:j:\temporary\shell\shell\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1369191048 source:j:\temporary\shell\shell\shell.c
+	<stdio.h>
+
+1369210022 source:j:\temporary\shell\shell\drv_shell.c
+	"Common.h"
+	"lw_oopc.h"
+	<stdio.h>
+	"Drv_Shell.h"
+
+1369201434 j:\temporary\shell\shell\common.h
+
+1368605790 j:\temporary\shell\shell\lw_oopc.h
+	"malloc.h"
+	<stddef.h>
+
+1369208576 j:\temporary\shell\shell\drv_shell.h
+

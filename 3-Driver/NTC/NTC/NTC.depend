@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1167737230 source:e:\temporary\ntc\ntc\main.c
+	<stdio.h>
+	<stdlib.h>
+
