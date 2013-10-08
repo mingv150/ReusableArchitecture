@@ -12,9 +12,9 @@ Changelog:
 
 
 /*Macro Definition*/
-#define DRV_LCDHARDWARE_8080 0
-#define DRV_LCDHARDWARE_6800 1
-#define DRV_LCDHARDWARE_SERI 2
+#define LCDHARDWARE_8080 0
+#define LCDHARDWARE_6800 1
+#define LCDHARDWARE_SERI 2
 
 #define DRV_LCDHARDWARE_SETCS() GPIO_SetBits(LCD_PORT_CS, LCD_Pin_CS)
 #define DRV_LCDHARDWARE_CLRCS() GPIO_ResetBits(LCD_PORT_CS, LCD_Pin_CS)
@@ -48,22 +48,22 @@ Changelog:
 ABS_CLASS(LCDBus)
 {
 	u8 bustype;
-	void (* SetBusType)(LCDBus *pthis,u8 bustype);
-	void (* WriteCommand)(LCDBus *pthis,u32 Com);
+	void (* SetBusType)(LCDBus *pthis, u8 bustype);
+	void (* WriteCommand)(LCDBus *pthis, u32 Com);
 	u32 (* ReadStatus)(LCDBus *pthis);
-	void (* WriteData)(LCDBus *pthis,u32 Dat);
+	void (* WriteData)(LCDBus *pthis, u32 Dat);
 	u32 (* ReadData)(LCDBus *pthis);
-    void (* ResetLcd)(LCDBus *pthis,u8 reset);
-    void (* BackLight)(LCDBus *pthis,u8 brightness);
+    void (* ResetLcd)(LCDBus *pthis, u8 reset);
+    void (* BackLight)(LCDBus *pthis, u8 brightness);
 };
 
 // 多态：通过接口来实现对不同的类型的LCD对象的操作
 INTERFACE(LCDInterface)
 {
 	void (* Init)(LCDInterface *pthis);
-	void (* FillScreen)(LCDInterface *pthis,u32 color);
-	void (* WriteDot)(LCDInterface *pthis,u16 x,u16 y,u32 color);
-	void (* ReadDot)(LCDInterface *pthis,u16 x,u16 y,u32 *color);
+	void (* FillScreen)(LCDInterface *pthis, u32 color);
+	void (* WriteDot)(LCDInterface *pthis, u16 x, u16 y, u32 color);
+	void (* ReadDot)(LCDInterface *pthis, u16 x, u16 y, u32 *color);
 	u16 (* GetXMax)(LCDInterface *pthis);
 	u16 (* GetYMax)(LCDInterface *pthis);
 };

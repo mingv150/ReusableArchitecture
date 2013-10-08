@@ -58,7 +58,7 @@ static void Drv_LcdHardware_WriteCommand(LCDBus *pthis,u32 Command)
 {
 	switch(pthis->bustype)
 	{
-	case DRV_LCDHARDWARE_8080:
+	case LCDHARDWARE_8080:
 		DRV_LCDHARDWARE_CLRCS();
   		DRV_LCDHARDWARE_CLRRS();
   		DRV_LCDHARDWARE_SETRE();
@@ -69,7 +69,7 @@ static void Drv_LcdHardware_WriteCommand(LCDBus *pthis,u32 Command)
   		DRV_LCDHARDWARE_SETRS();
   		DRV_LCDHARDWARE_SETCS();
 		break;
-	case DRV_LCDHARDWARE_6800:
+	case LCDHARDWARE_6800:
 		DRV_LCDHARDWARE_CLRRS();
 		delay(1);
 		DRV_LCDHARDWARE_CLRWR();
@@ -115,7 +115,7 @@ static void Drv_LcdHardware_WriteData(LCDBus *pthis,u32 Data)
 {
 	switch(pthis->bustype)
 	{
-	case DRV_LCDHARDWARE_8080:
+	case LCDHARDWARE_8080:
 		DRV_LCDHARDWARE_CLRCS();
   		DRV_LCDHARDWARE_SETRS();
   		DRV_LCDHARDWARE_SETRE();
@@ -126,7 +126,7 @@ static void Drv_LcdHardware_WriteData(LCDBus *pthis,u32 Data)
   		DRV_LCDHARDWARE_SETRS();
   		DRV_LCDHARDWARE_SETCS(); 
 		break;
-	case DRV_LCDHARDWARE_6800:
+	case LCDHARDWARE_6800:
 		DRV_LCDHARDWARE_SETRS();
 		delay(1);
 		DRV_LCDHARDWARE_CLRWR();
@@ -161,9 +161,9 @@ static u32 Drv_LcdHardware_ReadData(LCDBus *pthis)
 	u32 Data;
 	switch(pthis->bustype)
 	{
-	case DRV_LCDHARDWARE_8080:
+	case LCDHARDWARE_8080:
 		break;
-	case DRV_LCDHARDWARE_6800:
+	case LCDHARDWARE_6800:
 		DRV_LCDHARDWARE_SETRS();
 		delay(1);
 		DRV_LCDHARDWARE_SETWR();

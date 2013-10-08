@@ -1,27 +1,27 @@
 /****************************************************************************
 Copyright (C), 2013, Mingv150, All rights reserved
-FileName: Drv_LcdSPLC502B.c
+FileName: Drv_LcdUC1609C.c
 Description:  
 Author:  
 Version:  
 Changelog: 
 *****************************************************************************/
 
-#define _Drv_LcdSPLC502B_C_
+#define _Drv_LcdUC1609C_C_
 /*common header file*/
 #include "Common.h"
 #include "lw_oopc.h"
 #include "Drv_LcdModel.h"
 /*my header file*/
 #include "Drv_LcdHardware.h"
-#include "Drv_LcdSPLC502B.h"
+#include "Drv_LcdUC1609C.h"
 
 
 /*Global Data Structure*/
 
 
 /****************************************************************************
-Function: static void delay(__IO uint32_t nCount)
+Function: Name
 Description:
 Input:
 Output:
@@ -36,60 +36,60 @@ static void delay(u32 nCount)
 
 
 /****************************************************************************
-Function: static void Drv_LcdSPLC502B_Init(Splc502b *pthis)
+Function: FunctionName
 Description: 
 Input: 
 Output: 
 *****************************************************************************/
-static void Drv_LcdSPLC502B_Init(LCDInterface *pthis)
+static void Drv_LcdUC1609C_Init(LCDInterface *pthis)
 {
-    Splc502b *Dev = NULL; 
+	Uc1609c *Dev = NULL; 
     LCDBus *Bus = NULL;
 
-    Dev = SUB_PTR(pthis,LCDInterface,Splc502b);
+    Dev = SUB_PTR(pthis,LCDInterface,Uc1609c);
     Bus = SUPER_PTR(Dev,LCDBus);
 
-    Dev->XMax = SPLC502B_XMAX;
-    Dev->YMax = SPLC502B_YMAX;
+    Dev->XMax = UC1609C_XMAX;
+    Dev->YMax = UC1609C_YMAX;
 
-    Bus->SetBusType(Bus,LCDHARDWARE_6800);
+    Bus->SetBusType(Bus,LCDHARDWARE_8080);
 
     Bus->ResetLcd(Bus,0);
 	delay(100000);
     Bus->ResetLcd(Bus,1);
     delay(100000);
 
-    Bus->WriteCommand(Bus,0xAF); 
-    Bus->WriteCommand(Bus,0x2F); 
+    Bus->WriteCommand(Bus,0xE2);
+    Bus->WriteCommand(Bus,0x2E); 
+    Bus->WriteCommand(Bus,0x25); 
+    Bus->WriteCommand(Bus,0xEB); 
     Bus->WriteCommand(Bus,0x81); 
-    Bus->WriteCommand(Bus,0x10); 
-    Bus->WriteCommand(Bus,0x27); 
-    Bus->WriteCommand(Bus,0xA2); 
-    Bus->WriteCommand(Bus,0xC0); 
-    Bus->WriteCommand(Bus,0xA1); 
-    Bus->WriteCommand(Bus,0xA4); 
-    Bus->WriteCommand(Bus,0xA6);
-    Bus->WriteCommand(Bus,0xAC);
-    Bus->WriteCommand(Bus,0x00);
-    Bus->WriteCommand(Bus,0x40); 
+    Bus->WriteCommand(Bus,0x96); 
+    Bus->WriteCommand(Bus,0xA0); 
+    Bus->WriteCommand(Bus,0xA6); 
+    Bus->WriteCommand(Bus,0xC2); 
+    Bus->WriteCommand(Bus,0xF1);
+    Bus->WriteCommand(Bus,0x3F);
+    Bus->WriteCommand(Bus,0xA4);
+    Bus->WriteCommand(Bus,0xAF); 
 }
 
 
 /****************************************************************************
-Function: static void Drv_LcdSPLC502B_ReadDot(LCDInterface *pthis,u16 x,u16 y,u32 *color)
+Function: Name
 Description:
 Input:
 Output:
 *****************************************************************************/
-static void Drv_LcdSPLC502B_ReadDot(LCDInterface *pthis,u16 x,u16 y,u32 *color)
+static void Drv_LcdUC1609C_ReadDot(LCDInterface *pthis, u16 x, u16 y, u32 *color)
 {
     u8 x_lsb,x_hsb;
     u8 y_page;
 
-    Splc502b *Dev = NULL; 
+    Uc1609c *Dev = NULL; 
     LCDBus *Bus = NULL;
 
-    Dev = SUB_PTR(pthis,LCDInterface,Splc502b);
+    Dev = SUB_PTR(pthis,LCDInterface,Uc1609c);
     Bus = SUPER_PTR(Dev, LCDBus);
 
     if(x > Dev->XMax)
@@ -114,26 +114,26 @@ static void Drv_LcdSPLC502B_ReadDot(LCDInterface *pthis,u16 x,u16 y,u32 *color)
     Bus->WriteCommand(Bus,0xe0);                                
     y_page = (u8)Bus->ReadData(Bus);
 
-    *color = (u32)(y_page >> (y&0x07))&0x00000001;   
+    *color = (u32)(y_page >> (y&0x07))&0x00000001;  
 }
 
 
 /****************************************************************************
-Function: static void Drv_LcdSPLC502B_WriteDot(LCDInterface *pthis,u16 x,u16 y,u8 color)
+Function: Name
 Description:
 Input:
 Output:
 *****************************************************************************/
-static void Drv_LcdSPLC502B_WriteDot(LCDInterface *pthis,u16 x,u16 y,u32 color)
+static void Drv_LcdUC1609C_WriteDot(LCDInterface *pthis, u16 x, u16 y, u32 color)
 {
     u8 x_lsb,x_hsb;
     u8 y_page;
     u8 dot_mask=0x01;
 
-    Splc502b *Dev = NULL; 
+    Uc1609c *Dev = NULL; 
     LCDBus *Bus = NULL;
 
-    Dev = SUB_PTR(pthis,LCDInterface,Splc502b);
+    Dev = SUB_PTR(pthis,LCDInterface,Uc1609c);
     Bus = SUPER_PTR(Dev, LCDBus);
 
     if(x > Dev->XMax)
@@ -176,75 +176,43 @@ static void Drv_LcdSPLC502B_WriteDot(LCDInterface *pthis,u16 x,u16 y,u32 color)
         y_page &= ~dot_mask;
 
 	Bus->WriteData(Bus,(u32)y_page);							
-	Bus->WriteCommand(Bus,0xee);								
+	Bus->WriteCommand(Bus,0xee);
 }
 
 
 /****************************************************************************
-Function: static void Drv_LcdSPLC502B_FillScreen(LCDInterface *pthis,u32 Color)
+Function: Name
 Description:
 Input:
 Output:
 *****************************************************************************/
-static void Drv_LcdSPLC502B_FillScreen(LCDInterface *pthis,u32 Color)
+static void Drv_LcdUC1609C_FillScreen(LCDInterface *pthis, u32 color)
 {
-    unsigned char i,j,k;
-    Splc502b *Dev = NULL; 
-    LCDBus *Bus = NULL;
 
-    Dev = SUB_PTR(pthis,LCDInterface,Splc502b);
-    Bus = SUPER_PTR(Dev, LCDBus);
-
-    k = Dev->YMax;
-    k = k >> 3;
-
-    for (i=0; i<k; i++)
-    {
-        Bus->WriteCommand(Bus,(u32)(0xb0+i));
-        Bus->WriteCommand(Bus,0x10);
-        Bus->WriteCommand(Bus,0x00);
-        
-        for(j=0; j<Dev->XMax; j++)
-        {
-            Bus->WriteData(Bus,Color);
-        }
-    }
 }
 
 
 /****************************************************************************
-Function: static u16 Drv_LcdSPLC502B_GetXMax(LCDInterface *pthis)
+Function: Name
 Description:
 Input:
 Output:
 *****************************************************************************/
-static u16 Drv_LcdSPLC502B_GetXMax(LCDInterface *pthis)
+static u16 Drv_LcdUC1609C_GetXMax(LCDInterface *pthis)
 {
-    Splc502b *Dev = NULL; 
-    LCDBus *Bus = NULL;
 
-    Dev = SUB_PTR(pthis,LCDInterface,Splc502b);
-    Bus = SUPER_PTR(Dev, LCDBus);
-
-    return (u16)Dev->XMax;
 }
 
 
 /****************************************************************************
-Function: static u16 Drv_LcdSPLC502B_GetYMax(LCDInterface *pthis)
+Function: Name
 Description:
 Input:
 Output:
 *****************************************************************************/
-static u16 Drv_LcdSPLC502B_GetYMax(LCDInterface *pthis)
+static u16 Drv_LcdUC1609C_GetYMax(LCDInterface *pthis)
 {
-    Splc502b *Dev = NULL; 
-    LCDBus *Bus = NULL;
 
-    Dev = SUB_PTR(pthis,LCDInterface,Splc502b);
-    Bus = SUPER_PTR(Dev, LCDBus);
-
-    return (u16)Dev->YMax;
 }
 
 
@@ -254,12 +222,12 @@ Description:
 Input:
 Output:
 *****************************************************************************/
-CTOR(Splc502b)
+CTOR(Uc1609c)
 SUPER_CTOR(LCDBus);
-FUNCTION_SETTING(LCDInterface.Init, Drv_LcdSPLC502B_Init);
-FUNCTION_SETTING(LCDInterface.ReadDot,Drv_LcdSPLC502B_ReadDot);
-FUNCTION_SETTING(LCDInterface.WriteDot, Drv_LcdSPLC502B_WriteDot);
-FUNCTION_SETTING(LCDInterface.FillScreen,Drv_LcdSPLC502B_FillScreen);
-FUNCTION_SETTING(LCDInterface.GetXMax,Drv_LcdSPLC502B_GetXMax);
-FUNCTION_SETTING(LCDInterface.GetYMax,Drv_LcdSPLC502B_GetYMax);
+FUNCTION_SETTING(LCDInterface.Init, Drv_LcdUC1609C_Init);
+FUNCTION_SETTING(LCDInterface.ReadDot,Drv_LcdUC1609C_ReadDot);
+FUNCTION_SETTING(LCDInterface.WriteDot, Drv_LcdUC1609C_WriteDot);
+FUNCTION_SETTING(LCDInterface.FillScreen,Drv_LcdUC1609C_FillScreen);
+FUNCTION_SETTING(LCDInterface.GetXMax,Drv_LcdUC1609C_GetXMax);
+FUNCTION_SETTING(LCDInterface.GetYMax,Drv_LcdUC1609C_GetYMax);
 END_CTOR

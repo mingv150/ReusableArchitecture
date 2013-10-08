@@ -1,21 +1,21 @@
 /****************************************************************************
 Copyright (C), 2013, Mingv150, All rights reserved
-FileName: Drv_LcdSPLC502B.h
+FileName: Drv_LcdUC1609C.h
 Description:  
 Author:  
 Version:  
 Changelog: 
 *****************************************************************************/
 
-#ifndef _Drv_LcdSPLC502B_H_
-#define _Drv_LcdSPLC502B_H_
+#ifndef _Drv_LcdUC1609C_H_
+#define _Drv_LcdUC1609C_H_
 
 /*Macro Definition*/
-#define SPLC502B_XMAX (132)
-#define SPLC502B_YMAX (64)  
+#define UC1609C_XMAX (192)
+#define UC1609C_YMAX (64) 
 
 /*Data Type Specification*/
-CLASS(Splc502b)
+CLASS(Uc1609c)
 {
     u16 XMax;
 	u16 YMax;
@@ -25,7 +25,7 @@ CLASS(Splc502b)
 	IMPLEMENTS(LCDInterface);
 };
 
-#ifndef _Drv_LcdSPLC502B_C_
+#ifndef _Drv_LcdUC1609C_C_
 /*Interface Declarations*/
 
 #endif
