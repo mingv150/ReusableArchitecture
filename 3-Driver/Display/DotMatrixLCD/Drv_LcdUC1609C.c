@@ -111,7 +111,7 @@ static void Drv_LcdUC1609C_ReadDot(LCDInterface *pthis, u16 x, u16 y, u32 *color
     Bus->WriteCommand(Bus,(u32)x_lsb);
     Bus->WriteCommand(Bus,(u32)x_hsb);
     
-    Bus->WriteCommand(Bus,0xe0);                                
+    //Bus->WriteCommand(Bus,0xe0);                                
     y_page = (u8)Bus->ReadData(Bus);
 
     *color = (u32)(y_page >> (y&0x07))&0x00000001;  
@@ -167,7 +167,7 @@ static void Drv_LcdUC1609C_WriteDot(LCDInterface *pthis, u16 x, u16 y, u32 color
 	Bus->WriteCommand(Bus,(u32)x_lsb);
 	Bus->WriteCommand(Bus,(u32)x_hsb);
 	
-	Bus->WriteCommand(Bus,0xe0);								
+	//Bus->WriteCommand(Bus,0xe0);								
     y_page = (u8)Bus->ReadData(Bus);
 
 	if(color) 
@@ -176,7 +176,7 @@ static void Drv_LcdUC1609C_WriteDot(LCDInterface *pthis, u16 x, u16 y, u32 color
         y_page &= ~dot_mask;
 
 	Bus->WriteData(Bus,(u32)y_page);							
-	Bus->WriteCommand(Bus,0xee);
+	//Bus->WriteCommand(Bus,0xee);
 }
 
 
@@ -188,7 +188,27 @@ Output:
 *****************************************************************************/
 static void Drv_LcdUC1609C_FillScreen(LCDInterface *pthis, u32 color)
 {
+    unsigned char i,j,k;
+    Uc1609c *Dev = NULL; 
+    LCDBus *Bus = NULL;
 
+    Dev = SUB_PTR(pthis,LCDInterface,Uc1609c);
+    Bus = SUPER_PTR(Dev, LCDBus);
+
+    k = Dev->YMax;
+    k = k >> 3;
+
+    for (i=0; i<k; i++)
+    {
+        Bus->WriteCommand(Bus,(u32)(0xb0+i));
+        Bus->WriteCommand(Bus,0x10);
+        Bus->WriteCommand(Bus,0x00);
+        
+        for(j=0; j<Dev->XMax; j++)
+        {
+            Bus->WriteData(Bus,Color);
+        }
+    }
 }
 
 
@@ -200,7 +220,14 @@ Output:
 *****************************************************************************/
 static u16 Drv_LcdUC1609C_GetXMax(LCDInterface *pthis)
 {
+    Uc1609c *Dev = NULL; 
+    LCDBus *Bus = NULL;
 
+    Dev = SUB_PTR(pthis,LCDInterface,Uc1609c);
+    Bus = SUPER_PTR(Dev, LCDBus);
+
+    return (u16)Dev->XMax;
+}
 }
 
 
@@ -212,7 +239,13 @@ Output:
 *****************************************************************************/
 static u16 Drv_LcdUC1609C_GetYMax(LCDInterface *pthis)
 {
+    Uc1609c *Dev = NULL; 
+    LCDBus *Bus = NULL;
 
+    Dev = SUB_PTR(pthis,LCDInterface,Uc1609c);
+    Bus = SUPER_PTR(Dev, LCDBus);
+
+    return (u16)Dev->YMax;
 }
 
 

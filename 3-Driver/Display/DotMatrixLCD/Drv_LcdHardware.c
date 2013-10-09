@@ -14,7 +14,7 @@ Changelog:
 #include "lw_oopc.h"
 #include "Drv_LcdModel.h"
 /*my header file*/
-#include "stm3210c_eval_lcd.h"
+#include "Device.h"
 #include "Drv_LcdHardware.h"
 
 
@@ -162,6 +162,17 @@ static u32 Drv_LcdHardware_ReadData(LCDBus *pthis)
 	switch(pthis->bustype)
 	{
 	case LCDHARDWARE_8080:
+		DRV_LCDHARDWARE_DBIN();
+		DRV_LCDHARDWARE_CLRCS();
+  		DRV_LCDHARDWARE_SETRS();
+  		DRV_LCDHARDWARE_CLRRE();
+  		DRV_LCDHARDWARE_SETWE();
+  		DRV_LCDHARDWARE_READDAT(Data);
+  		DRV_LCDHARDWARE_SETWE();
+  		DRV_LCDHARDWARE_SETRE();
+  		DRV_LCDHARDWARE_SETRS();
+  		DRV_LCDHARDWARE_SETCS();
+  		DRV_LCDHARDWARE_DBOUT(); 
 		break;
 	case LCDHARDWARE_6800:
 		DRV_LCDHARDWARE_SETRS();
