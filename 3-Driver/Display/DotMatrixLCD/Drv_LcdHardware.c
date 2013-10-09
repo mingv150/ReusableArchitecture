@@ -85,7 +85,7 @@ static void Drv_LcdHardware_WriteCommand(LCDBus *pthis,u32 Command)
 		DRV_LCDHARDWARE_SETCS();
 		delay(1);
 		break;
-	case DRV_LCDHARDWARE_SERI:
+	case LCDHARDWARE_SERI:
 		break;
 	default:
 		break;	
@@ -142,7 +142,7 @@ static void Drv_LcdHardware_WriteData(LCDBus *pthis,u32 Data)
 		DRV_LCDHARDWARE_SETCS();
 		delay(1);
 		break;
-	case DRV_LCDHARDWARE_SERI:
+	case LCDHARDWARE_SERI:
 		break;
 	default:
 		break;	
@@ -196,7 +196,7 @@ static u32 Drv_LcdHardware_ReadData(LCDBus *pthis)
 		delay(1);
 		DRV_LCDHARDWARE_DBOUT();
 		break;
-	case DRV_LCDHARDWARE_SERI:
+	case LCDHARDWARE_SERI:
 		break;
 	default:
 		break;	
