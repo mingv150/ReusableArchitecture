@@ -239,12 +239,12 @@ void Drv_LcdGuiBasic_DrawString(u8 Fonttype, u16 x, u16 y, u8 *str)
     while (*str != 0)
     {
         Drv_LcdGuiBasic_Drawfont(Fonttype, x, y, *str);
-        x += X_Width;
-        if ((x + X_Width) > pFace->GetXMax(pFace))
+        x += XWidth;
+        if ((x + XWidth) > pFace->GetXMax(pFace))
         {
             x = 0;
-            if ((pFace->GetYMax(pFace) - y) < Y_Width) break;
-            else y += Y_Width;
+            if ((pFace->GetYMax(pFace) - y) < YWidth) break;
+            else y += YWidth;
         }
         str++;
     }

@@ -186,7 +186,7 @@ Description:
 Input:
 Output:
 *****************************************************************************/
-static void Drv_LcdUC1609C_FillScreen(LCDInterface *pthis, u32 color)
+static void Drv_LcdUC1609C_FillScreen(LCDInterface *pthis, u32 Color)
 {
     unsigned char i,j,k;
     Uc1609c *Dev = NULL; 
@@ -227,7 +227,6 @@ static u16 Drv_LcdUC1609C_GetXMax(LCDInterface *pthis)
     Bus = SUPER_PTR(Dev, LCDBus);
 
     return (u16)Dev->XMax;
-}
 }
 
 
