@@ -24,6 +24,7 @@ Changelog:
 #define	MAX(x,y) (((x) > (y)) ? (x) : (y))
 #define MIN(x,y) (((x) < (y)) ? (x) : (y))
 #define ARR_SIZE(a) (sizeof((a))/sizeof((a[0])))
+#define BIT_SIZE(a) (sizeof((a))<<3)
 
 #if defined(__GNUC__)
 #define __EXTENSION __extension__
@@ -37,22 +38,22 @@ Changelog:
 
 /*Data Type Specification*/
 //C basic date type 
-typedef bool u8;
+//typedef bool u8;
 typedef unsigned char u8;
 typedef signed char s8;
 typedef unsigned short int u16;
 typedef signed short int s16;
-typedef unsigned short long int u24;
-typedef signed short long int s24;
+//typedef unsigned short long int u24;
+//typedef signed short long int s24;
 typedef unsigned int u32;
 typedef signed int s32;
-typedef unsigned long int u32;
-typedef signed long int s32;
+//typedef unsigned long int u32;
+//typedef signed long int s32;
 typedef unsigned long long u64;
-typedef signed long long s64
+typedef signed long long s64;
 typedef float f32;
-typedef double float f64;
-typedef long double float f64;
+//typedef double float f64;
+//typedef long double float f64;
 
 
 typedef union

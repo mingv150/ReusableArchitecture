@@ -21,10 +21,11 @@ Changelog:
 #define KEY_DOWN 0
 #define KEY_HIGH KEY_UP
 #define KEY_LOW KEY_DOWN
+#define KEY_DEBOUNCE 30
 
 /*Data Type Specification*/
 typedef u32 t_Key_Arraytype; 
-typedef s8 (*t_Key_Send)(u8 KeyType,u8 UpDown);
+typedef u8 (*t_Key_Send)(u8 KeyType,u8 UpDown);
 typedef struct
 {
     t_Key_Arraytype IOState[KEY_ARRAYSIZE];

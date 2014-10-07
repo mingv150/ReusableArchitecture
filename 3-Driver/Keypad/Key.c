@@ -39,15 +39,15 @@ Input:
 Output:
 Notes:
 *****************************************************************************/
-static void Key_Set(t_Key *pKey,u8 Key,u8 Level)
+static void Key_Set(t_Key *pKey,u8 Key,u32 Level)
 {
     if(Level)
     {
-        SETBIT(pKey->IOState[Key/32],Key%32);
+        SETBIT(pKey->IOState[Key/BIT_SIZE(t_Key_Arraytype)],Key%BIT_SIZE(t_Key_Arraytype));
     }
     else
     {
-        CLRBIT(pKey->IOState[Key/32],Key%32);
+        CLRBIT(pKey->IOState[Key/BIT_SIZE(t_Key_Arraytype)],Key%BIT_SIZE(t_Key_Arraytype));
     }
 }
 
@@ -60,9 +60,15 @@ Output:
 Notes:
 *****************************************************************************/
 static void Key_Scan(t_Key *pKey)
-{ 
-    Key_Set(pKey,KEY_0,gpio0);
-    Key_Set(pKey,KEY_1,gpio1);
+{
+	xSysCtlPeripheralEnable(xSYSCTL_PERIPH_GPIOC);
+    xSysCtlPeripheralEnable(xSYSCTL_PERIPH_GPIOB);
+    xGPIODirModeSet( xGPIO_PORTC_BASE, xGPIO_PIN_4, xGPIO_DIR_MODE_IN );
+    xGPIODirModeSet( xGPIO_PORTB_BASE, xGPIO_PIN_10, xGPIO_DIR_MODE_IN );
+    
+	Key_Set(pKey,KEY_0,xGPIOPinRead(xGPIO_PORTC_BASE,xGPIO_PIN_4));
+    Key_Set(pKey,KEY_1,xGPIOPinRead(xGPIO_PORTB_BASE,xGPIO_PIN_10));
+    
 }
 
 
@@ -82,11 +88,11 @@ static void Key_Debounce(t_Key *pKey)
         if(pKey->IOState[i] != pKey->IOStateBuf[i])
         {
             pKey->IOStateBuf[i] = pKey->IOState[i];
-            pKey->Debounce[i] = 0;
+            pKey->IODebounce[i] = 0;
         }
-        else if(pKey->Debounce[i] < SHORTDEBOUNCE)
+        else if(pKey->IODebounce[i] < KEY_DEBOUNCE)
         {
-            pKey->Debounce[i]++;
+            pKey->IODebounce[i]++;
         }
         else
         {
@@ -94,17 +100,17 @@ static void Key_Debounce(t_Key *pKey)
             pKey->IOStatePre[i] = pKey->IOState[i];
             pKey->KeyState = pKey->IOState[i];
             
-            for(j=0; j<(sizeof(pKey->KeyEvent)<<4); j++)
+            for(j=0; j<(BIT_SIZE(t_Key_Arraytype)); j++)
             {
                 if(REDBIT(pKey->KeyEvent,j))
                 {
                     if(REDBIT(pKey->KeyState,j))
                     {
-                        pKey->SendEventCb(j+i*(sizeof(pKey->KeyEvent)<<4),KEY_HIGH);
+                        pKey->SendEventCb(j+i*(BIT_SIZE(t_Key_Arraytype)),KEY_HIGH);
                     }
                     else
                     {
-                        pKey->SendEventCb(j+i*(sizeof(pKey->KeyEvent)<<4),KEY_LOW);
+                        pKey->SendEventCb(j+i*(BIT_SIZE(t_Key_Arraytype)),KEY_LOW);
                     }
                 }
             }           
